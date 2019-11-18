@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "416920528739-9qo0nc3cii9f6rbb9fn6tbub0c76vipn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trucandphat.tnpblog",
+            "certificate_hash": "a95f595677f027540f5dd50ac7ca1ec0c4479340"
+          }
+        },
+        {
           "client_id": "416920528739-db9tsrucufd2a7ehaamef28421b0saep.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -5,14 +5,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.trucandphat.tnpblog.R;
@@ -25,7 +21,7 @@ public class BlogFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_blogs, container, false);
         BottomNavigationView bottomNav = root.findViewById(R.id.top_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListner);
-        getFragmentManager().beginTransaction().replace(R.id.blog_fragment_container, new BlogStudyFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.blog_fragment_container, new EducationBlogFragment()).commit();
         return root;
     }
     private BottomNavigationView.OnNavigationItemSelectedListener navListner =
@@ -35,13 +31,13 @@ public class BlogFragment extends Fragment {
                     FragmentManager t = getFragmentManager();
                     String fragTag="";
                     Fragment selectedFragment = null;
-                    if(t.findFragmentByTag("Study") != null){
+                    if(t.findFragmentByTag("Education") != null){
                         //if the other fragment is visible, hide it.
-                        t.beginTransaction().hide(t.findFragmentByTag("Study")).commit();
+                        t.beginTransaction().hide(t.findFragmentByTag("Education")).commit();
                     }
-                    if(t.findFragmentByTag("Love") != null){
+                    if(t.findFragmentByTag("Confession") != null){
                         //if the other fragment is visible, hide it.
-                        t.beginTransaction().hide(t.findFragmentByTag("Love")).commit();
+                        t.beginTransaction().hide(t.findFragmentByTag("Confession")).commit();
                     }
                     if(t.findFragmentByTag("Entertainment") != null){
                         //if the other fragment is visible, hide it.
@@ -50,15 +46,15 @@ public class BlogFragment extends Fragment {
 
                     switch (menuItem.getItemId()){
                         case R.id.nav_study:
-                            selectedFragment = new BlogStudyFragment();
-                            fragTag="Study";
+                            selectedFragment = new EducationBlogFragment();
+                            fragTag="Education";
                             break;
                         case R.id.nav_love:
-                            selectedFragment = new BlogLoveFragment();
-                            fragTag="Love";
+                            selectedFragment = new ConfessionBlogFragment();
+                            fragTag="Confession";
                             break;
                         case R.id.nav_entertainment:
-                            selectedFragment = new BlogEntertainmentFragment();
+                            selectedFragment = new EntertainmentBlogFragment();
                             fragTag="Entertainment";
                             break;
                     }
