@@ -13,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     public static GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 123;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference dbReference;
 
     private String userId;
 
@@ -46,7 +46,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        firebaseAuth = FirebaseAuth.getInstance();
         initGoogleSignin();
+        dbReference = FirebaseDatabase.getInstance().getReference();
+        setEvent();
     }
     protected void initGoogleSignin() {
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -54,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this,googleSignInOptions);
-
     }
     protected void setEvent() {
         this.googleSigninBtn = findViewById(R.id.google_signin_button);
@@ -78,8 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            checkForUserIdInDatabase();
                             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            checkForUserIdInDatabase();
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             intent.putExtra("userId",userId);
                             startActivity(intent);
@@ -109,8 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void checkForUserIdInDatabase() {
-        final DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference().child("User").child(userId);
-        dbReference
+        dbReference.child("User").child(userId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
