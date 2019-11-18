@@ -13,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     public static GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 123;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference dbReference;
 
     private String userId;
 
@@ -46,7 +46,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        firebaseAuth = FirebaseAuth.getInstance();
         initGoogleSignin();
+        dbReference = FirebaseDatabase.getInstance().getReference();
         setEvent();
     }
     protected void initGoogleSignin() {
@@ -55,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this,googleSignInOptions);
-        firebaseAuth = FirebaseAuth.getInstance();
     }
     protected void setEvent() {
         this.googleSigninBtn = findViewById(R.id.google_signin_button);
@@ -72,14 +73,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        myProgress.dismiss();
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            checkForUserIdInDatabase();
                             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            checkForUserIdInDatabase();
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             intent.putExtra("userId",userId);
                             startActivity(intent);
@@ -105,17 +107,17 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
+                e.printStackTrace();
             }
         }
     }
     private void checkForUserIdInDatabase() {
-        final DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference().child("User").child(userId);
-        dbReference
+        dbReference.child("User").child(userId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (!dataSnapshot.exists()) {
-                            dbReference.setValue(1)
+                            dbReference.child("User").child(userId).setValue(1)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

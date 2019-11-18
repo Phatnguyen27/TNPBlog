@@ -10,10 +10,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="6"
-        android:layout_marginLeft="30dp">
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginBottom="20dp">
     <TextView
         android:id="@+id/name_label"
-        android:layout_width="wrap_content"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
         android:text="User's name"
         android:layout_weight="1"/>
@@ -23,5 +25,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="5"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/dob_area"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="6"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/name_area"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/dob_label"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="Birthday"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/edit_dob"
+            android:hint="Your birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/doc_area"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="6"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/dob_area">
+        <TextView
+            android:id="@+id/doc_label"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="Day of creation"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/edit_doc"
+            android:hint="Account created on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"/>
     </LinearLayout>
 </RelativeLayout>
