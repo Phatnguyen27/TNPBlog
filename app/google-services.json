@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "416920528739",
+    "firebase_url": "https://tnpblog-3b7c5.firebaseio.com",
+    "project_id": "tnpblog-3b7c5",
+    "storage_bucket": "tnpblog-3b7c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416920528739:android:23e986d71f3c94f075d556",
+        "android_client_info": {
+          "package_name": "com.trucandphat.tnpblog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416920528739-db9tsrucufd2a7ehaamef28421b0saep.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trucandphat.tnpblog",
+            "certificate_hash": "708cf3dfe1562301ace6f42dd3c19bc7c2b11aed"
+          }
+        },
+        {
+          "client_id": "416920528739-uqfdo8jdu65pjfvsv9dut38ai55cddoi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9fZTvo202x1yktuCcctQfdY5vV9xx_04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416920528739-uqfdo8jdu65pjfvsv9dut38ai55cddoi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
