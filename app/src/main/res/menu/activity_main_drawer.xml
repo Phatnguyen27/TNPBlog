@@ -12,6 +12,10 @@
             android:id="@+id/nav_personal_information"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Information" />
+        <item
+            android:id="@+id/nav_add_new_blog"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="New Blog" />
     </group>
 
 </menu>

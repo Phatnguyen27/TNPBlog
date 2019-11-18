@@ -16,20 +16,14 @@ import com.trucandphat.tnpblog.R;
 
 public class InformationFragment extends Fragment {
 
-    private InformationViewModel homeViewModel;
+    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(InformationViewModel.class);
         View root = inflater.inflate(R.layout.fragment_information, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
+    }
+    public void setEvent() {
+
     }
 }
