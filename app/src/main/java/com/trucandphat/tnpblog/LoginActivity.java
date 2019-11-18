@@ -26,6 +26,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trucandphat.tnpblog.Model.User;
+
+import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -83,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             checkForUserIdInDatabase();
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                            intent.putExtra("userId",userId);
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -116,12 +118,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (!dataSnapshot.exists()) {
-                            dbReference.child("User").child(userId).setValue(1)
+                            Date date = new Date();
+                            User user = new User(userId,"Mr Truc",date,date,0);
+                            dbReference.child("User").child(userId).setValue(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-
                                             }
                                         }
                                     });
