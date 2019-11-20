@@ -15,9 +15,9 @@ public class Blog implements Serializable {
     private int dislike;
 
     public static enum BlogType {
-        Education("E", 0),
-        Confession("C", 1),
-        Entertainment("Et",2);
+        Education("Education", 0),
+        Confession("Confession", 1),
+        Entertainment("Entertainment",2);
 
         private String stringValue;
         private int intValue;
