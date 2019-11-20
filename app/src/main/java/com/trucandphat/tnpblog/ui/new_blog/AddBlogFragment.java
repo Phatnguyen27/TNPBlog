@@ -46,15 +46,19 @@ public class AddBlogFragment extends Fragment {
             @Override
                 public void onClick(View v) {
                 int category = -1;
+                String categoryString = "";
                 switch (mRadioGroupCategory.getCheckedRadioButtonId()) {
                     case R.id.education_radio:
                         category = Blog.BlogType.Education.toInt();
+                        categoryString = Blog.BlogType.Education.toString();
                         break;
                     case R.id.confession_radio:
                         category = Blog.BlogType.Confession.toInt();
+                        categoryString = Blog.BlogType.Confession.toString();
                         break;
                     case R.id.entertainment_radio:
                         category = Blog.BlogType.Entertainment.toInt();
+                        categoryString = Blog.BlogType.Entertainment.toString();
                         break;
                         default:
                             break;
@@ -66,7 +70,7 @@ public class AddBlogFragment extends Fragment {
                     String key = dbReference.child("Blog").push().getKey();
                     String authorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     newBlog = new Blog(key,title,content,authorId,category,new Date(),0,0);
-                    dbReference.child("Blog").child(key).setValue(newBlog).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    dbReference.child("Blog").child(categoryString).child(key).setValue(newBlog).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()) {
