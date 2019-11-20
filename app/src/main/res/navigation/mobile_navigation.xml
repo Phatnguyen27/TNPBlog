@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_information">
+    app:startDestination="@+id/nav_blog">
 
     <fragment
         android:id="@+id/nav_information"
         android:name="com.trucandphat.tnpblog.ui.information.InformationFragment"
         android:label="Personal Information"
-        tools:layout="@layout/fragment_information" />
+        tools:layout="@layout/fragment_information"/>
     <fragment
         android:id="@+id/nav_blog"
         android:name="com.trucandphat.tnpblog.ui.blog.BlogFragment"
         android:label="Blogs"
-        tools:layout="@layout/fragment_blogs" />
+        tools:layout="@layout/fragment_blogs"/>
     <fragment
         android:id="@+id/nav_add_new"
-        android:name="com.trucandphat.tnpblog.ui.blog.BlogFragment"
-        android:label="New Blogs"
-        tools:layout="@layout/fragment_add_new" />
+        android:name="com.trucandphat.tnpblog.ui.new_blog.AddBlogFragment"
+        android:label="New Blog"
+        tools:layout="@layout/fragment_add_new"/>
 </navigation>
