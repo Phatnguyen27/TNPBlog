@@ -1,14 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.new_blog.AddBlogFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:layout_marginLeft="6dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/category_label"
+        android:text="Your category"
+        android:textSize="23dp"
+        />
+    <RadioGroup
+        android:layout_below="@+id/category_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/category_radiogroup"
+        android:layout_marginTop="6dp">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Education"
+            android:layout_marginRight="9dp"
+            android:id="@+id/education_radio"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confession"
+            android:layout_marginRight="9dp"
+            android:id="@+id/confession_radio"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Entertainment"
+            android:layout_marginRight="9dp"
+            android:id="@+id/entertainment_radio"/>
 
-</FrameLayout>
+    </RadioGroup>
+
+    <EditText
+        android:layout_below="@id/category_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_title"
+        android:hint="Your blog's title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+    <TextView
+        android:layout_below="@+id/edit_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Content"
+        android:textSize="23dp"
+        android:id="@+id/content_label"/>
+    <EditText
+        android:layout_below="@+id/content_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Blog's content"
+        android:id="@+id/edit_content"
+        android:scrollbars="horizontal"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
+        android:backgroundTint="#FFFFFF"
+        android:src="@drawable/ic_add_black_24dp"
+        android:id="@+id/add_button"
+        />
+
+
+</RelativeLayout>
