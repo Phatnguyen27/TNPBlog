@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class User implements Serializable {
+    private static User instance = null;
     private String uid;
+    private String avatar;
     private String username;
     private String email;
     private Date dateOfBirth;
@@ -14,6 +16,12 @@ public class User implements Serializable {
 
     public User() {
 
+    }
+    public static User getCurrentUser(){
+        if(instance == null){
+            instance = new User();
+        }
+        return instance;
     }
 
     public String getUid() {
@@ -26,6 +34,7 @@ public class User implements Serializable {
 
     public User(String uid, String username,String email, Date dateOfBirth, Date dateCreated,int blogNumber) {
         this.uid = uid;
+        this.avatar = "";
         this.username = username;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
@@ -63,5 +72,13 @@ public class User implements Serializable {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
