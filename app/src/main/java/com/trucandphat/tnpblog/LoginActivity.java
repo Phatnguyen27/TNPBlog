@@ -2,9 +2,14 @@ package com.trucandphat.tnpblog;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -42,17 +47,24 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference dbReference;
-
     private String userId;
+    private int REQUEST_PERMISSION =12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        firebaseAuth = FirebaseAuth.getInstance();
-        initGoogleSignin();
-        dbReference = FirebaseDatabase.getInstance().getReference();
-        setEvent();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION);
+            return;
+        } else {
+            firebaseAuth = FirebaseAuth.getInstance();
+            initGoogleSignin();
+            dbReference = FirebaseDatabase.getInstance().getReference();
+            setEvent();
+        }
     }
     protected void initGoogleSignin() {
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -122,7 +134,10 @@ public class LoginActivity extends AppCompatActivity {
                             Date date = new Date();
                             String email = firebaseAuth.getCurrentUser().getEmail();
                             String username = firebaseAuth.getCurrentUser().getDisplayName();
+                            User.getCurrentUser().setId(dataSnapshot.getKey());
+                            User.getCurrentUser().setUsername(username);
                             User user = new User(userId,username,email,date,date,0);
+                            user.setId(dataSnapshot.getKey());
                             dbReference.child("User").child(userId).setValue(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -138,5 +153,21 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                initGoogleSignin();
+                dbReference = FirebaseDatabase.getInstance().getReference();
+                setEvent();
+            }
+            else {
+                finish();
+            }
+        }
     }
 }
