@@ -120,7 +120,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (!dataSnapshot.exists()) {
                             Date date = new Date();
-                            User user = new User(userId,"Mr Truc",date,date,0);
+                            String email = firebaseAuth.getCurrentUser().getEmail();
+                            String username = firebaseAuth.getCurrentUser().getDisplayName();
+                            User user = new User(userId,username,email,date,date,0);
                             dbReference.child("User").child(userId).setValue(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
