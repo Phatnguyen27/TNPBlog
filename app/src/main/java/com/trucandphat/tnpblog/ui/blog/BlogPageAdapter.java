@@ -23,18 +23,19 @@ public class BlogPageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return tabTitles.length;
     }
 
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "Education";
-            case 1:
-                return "Confession";
-            case 2:
-                return "Entertainment";
-                default: return null;
-        }
+//        switch (position) {
+//            case 0:
+//                return "Education";
+//            case 1:
+//                return "Confession";
+//            case 2:
+//                return "Entertainment";
+//                default: return null;
+//        }
+        return tabTitles[position];
     }
 }
