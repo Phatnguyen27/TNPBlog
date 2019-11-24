@@ -134,7 +134,10 @@ public class LoginActivity extends AppCompatActivity {
                             Date date = new Date();
                             String email = firebaseAuth.getCurrentUser().getEmail();
                             String username = firebaseAuth.getCurrentUser().getDisplayName();
+                            User.getCurrentUser().setId(dataSnapshot.getKey());
+                            User.getCurrentUser().setUsername(username);
                             User user = new User(userId,username,email,date,date,0);
+                            user.setId(dataSnapshot.getKey());
                             dbReference.child("User").child(userId).setValue(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

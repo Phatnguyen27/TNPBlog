@@ -31,6 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,7 +96,7 @@ public class InformationFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && requestCode == RESULT_OK && data != null && data.getData() != null ){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null ){
             loadingDialog.show();
             filePath = data.getData();
             try {
@@ -106,9 +107,8 @@ public class InformationFragment extends Fragment {
                 Toast.makeText(getContext(),"fail",Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-            Log.i("test",filePath.toString());
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-            final StorageReference reference = storageReference.child("userImage/"+ User.getCurrentUser().getUid());
+            final StorageReference reference = storageReference.child("userImage/"+User.getCurrentUser().getUid());
             reference.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -118,15 +118,34 @@ public class InformationFragment extends Fragment {
                             Map<String, Object> data = new HashMap<>();
                             data.put("avatar",uri.toString());
                             User.getCurrentUser().setAvatar(uri.toString());
-                            FirebaseDatabase.getInstance().getReference().child("User").child(User.getCurrentUser().getUid()).updateChildren(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            //tới đây vẫn đc nè
+
+                            FirebaseDatabase.getInstance().getReference().child("User")
+                                    .child(User.getCurrentUser().getId()).updateChildren(data)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     loadingDialog.dismiss();
                                     Toast.makeText(getContext(),User.getCurrentUser().getUsername()+"'s avatar updated complete!",Toast.LENGTH_SHORT).show();
                                 }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getContext(),"fail_lan_cuoi",Toast.LENGTH_SHORT).show();
+                                }
                             });
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(),"fail_something1",Toast.LENGTH_SHORT).show();
+                        }
                     });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(),"fail_up_image",Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -161,8 +180,11 @@ public class InformationFragment extends Fragment {
                     User user = ds.getValue(User.class);
                     if(user.getUid().equals(userId)) {
                         Toast.makeText(getContext(),user.getUsername(),Toast.LENGTH_SHORT).show();
-                        new DownloadImageFromInternet(profileImage)
-                                .execute(user.getCurrentUser().getAvatar());
+                        user.getCurrentUser().setId(ds.getKey());
+                        if(user.getCurrentUser().getAvatar() != null) {
+                            new DownloadImageFromInternet(profileImage)
+                                    .execute(user.getCurrentUser().getAvatar());
+                        }
                         mEditName.setText(user.getUsername());
                         mEditEmail.setText(user.getEmail());
                         mEditDOB.setText(user.getDateOfBirth().toString());

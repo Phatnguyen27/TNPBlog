@@ -13,6 +13,7 @@ public class User implements Serializable {
     private Date dateOfBirth;
     private Date dateCreated;
     private int blogNumber;
+    private String id;
 
     public User() {
 
@@ -40,6 +41,7 @@ public class User implements Serializable {
         this.dateOfBirth = dateOfBirth;
         this.dateCreated = dateCreated;
         this.blogNumber = blogNumber;
+        id = "";
     }
 
     public String getUsername() {
@@ -80,5 +82,13 @@ public class User implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
