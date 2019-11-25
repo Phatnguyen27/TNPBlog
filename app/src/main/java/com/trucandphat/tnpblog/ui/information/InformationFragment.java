@@ -102,13 +102,15 @@ public class InformationFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),filePath);
                 profileImage.setImageBitmap(bitmap);
-                Toast.makeText(getContext(),"complete",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),User.getCurrentUser().getUid()+"complete",Toast.LENGTH_SHORT).show();
             } catch (IOException e){
                 Toast.makeText(getContext(),"fail",Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+            //Toast.makeText(getContext(),User.getCurrentUser().getUid(),Toast.LENGTH_SHORT).show();
             final StorageReference reference = storageReference.child("userImage/"+User.getCurrentUser().getUid());
+
             reference.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -118,15 +120,14 @@ public class InformationFragment extends Fragment {
                             Map<String, Object> data = new HashMap<>();
                             data.put("avatar",uri.toString());
                             User.getCurrentUser().setAvatar(uri.toString());
-                            //tới đây vẫn đc nè
 
                             FirebaseDatabase.getInstance().getReference().child("User")
-                                    .child(User.getCurrentUser().getId()).updateChildren(data)
+                                    .child(User.getCurrentUser().getUid()).updateChildren(data)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     loadingDialog.dismiss();
-                                    Toast.makeText(getContext(),User.getCurrentUser().getUsername()+"'s avatar updated complete!",Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(),User.getCurrentUser().getUid()+"'s avatar updated complete!",Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -179,7 +180,12 @@ public class InformationFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     User user = ds.getValue(User.class);
                     if(user.getUid().equals(userId)) {
-                        Toast.makeText(getContext(),user.getUsername(),Toast.LENGTH_SHORT).show();
+                        User.getCurrentUser().setId(user.getId());
+                        User.getCurrentUser().setUid(user.getUid());
+                        User.getCurrentUser().setUsername(user.getUsername());
+                        User.getCurrentUser().setAvatar(user.getAvatar());
+                        User.getCurrentUser().setDateCreated(user.getDateCreated());
+                        //Toast.makeText(getContext(),user.getUsername(),Toast.LENGTH_SHORT).show();
                         user.getCurrentUser().setId(ds.getKey());
                         if(user.getCurrentUser().getAvatar() != null) {
                             new DownloadImageFromInternet(profileImage)
