@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                             String username = firebaseAuth.getCurrentUser().getDisplayName();
                             User.getCurrentUser().setId(dataSnapshot.getKey());
                             User.getCurrentUser().setUsername(username);
+                            User.getCurrentUser().setUid(dataSnapshot.getKey());
                             User user = new User(userId,username,email,date,date,0);
                             user.setId(dataSnapshot.getKey());
                             dbReference.child("User").child(userId).setValue(user)
