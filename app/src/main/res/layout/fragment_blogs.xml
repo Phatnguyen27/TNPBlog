@@ -12,7 +12,6 @@
         android:id="@+id/blog_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabBackground="#FFFFFF"
         app:tabSelectedTextColor="#000000">
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager.widget.ViewPager

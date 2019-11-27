@@ -10,7 +10,7 @@
         android:id="@+id/fragment_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/Entertainment"
+        android:src="@drawable/entertainment"
         android:layout_marginBottom="10dp"/>
     <ListView
         android:id="@+id/entertainment_blog_listview"

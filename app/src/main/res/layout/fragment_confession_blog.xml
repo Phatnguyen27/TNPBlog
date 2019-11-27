@@ -10,7 +10,7 @@
         android:id="@+id/fragment_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/Confession"
+        android:src="@drawable/confession"
         android:layout_marginBottom="10dp"/>
     <ListView
         android:id="@+id/confession_blog_listview"

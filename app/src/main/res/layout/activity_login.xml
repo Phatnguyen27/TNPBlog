@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@drawable/gradient_background_1">
 
     <ImageView
         android:id="@+id/ic_tnp_app"
@@ -12,7 +13,7 @@
         android:layout_height="240dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="180dp"
-        android:src="@drawable/ic_tnp_app" />
+        android:src="@drawable/tnp_ic" />
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_signin_button"
         android:layout_width="230dp"

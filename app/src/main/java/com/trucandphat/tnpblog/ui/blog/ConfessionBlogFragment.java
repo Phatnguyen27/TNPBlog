@@ -13,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.trucandphat.tnpblog.Model.Blog;
 import com.trucandphat.tnpblog.R;
 
@@ -25,7 +28,6 @@ public class ConfessionBlogFragment extends Fragment {
     private ListView mListviewConfessionBlog;
     private ArrayList<Blog> confessionBlogList;
     private DatabaseReference dbReference;
-    private TextView tv;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_confession_blog, container, false);
@@ -35,8 +37,24 @@ public class ConfessionBlogFragment extends Fragment {
     public void setProperties(View view) {
         mListviewConfessionBlog = view.findViewById(R.id.confession_blog_listview);
         confessionBlogList = new ArrayList<Blog>();
-        dbReference = FirebaseDatabase.getInstance().getReference().child("Diary").child("Confession");
-        tv = view.findViewById(R.id.tv_confession);
-        tv.setText("Confession");
+        dbReference = FirebaseDatabase.getInstance().getReference().child("Diary").child("confession");
+    }
+    public void loadBlogs() {
+        dbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    for(DataSnapshot data : dataSnapshot.getChildren()) {
+                        Blog blogItem = data.getValue(Blog.class);
+                        confessionBlogList.add(blogItem);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

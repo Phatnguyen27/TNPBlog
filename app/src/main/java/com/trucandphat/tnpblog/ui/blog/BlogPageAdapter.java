@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class BlogPageAdapter extends FragmentStatePagerAdapter {
-    private String tabTitles[] = new String[] { "Education", "Confession","Entertainment"};
+    private String tabTitles[] = new String[] { "Education", "confession","entertainment"};
 
     public BlogPageAdapter(FragmentManager fm) {
         super(fm);
@@ -31,9 +31,9 @@ public class BlogPageAdapter extends FragmentStatePagerAdapter {
 //            case 0:
 //                return "Education";
 //            case 1:
-//                return "Confession";
+//                return "confession";
 //            case 2:
-//                return "Entertainment";
+//                return "entertainment";
 //                default: return null;
 //        }
         return tabTitles[position];
