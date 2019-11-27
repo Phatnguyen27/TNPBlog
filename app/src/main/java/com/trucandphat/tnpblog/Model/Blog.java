@@ -11,6 +11,7 @@ public class Blog implements Serializable {
     private int type;
     private String title;
     private String authorId;
+    private String authorName;
     private int like;
     private int dislike;
 
@@ -38,7 +39,7 @@ public class Blog implements Serializable {
 
     public Blog() {}
 
-    public Blog(String id,String title,String content,String authorId,int type,Date dateCreated,int likeAmount,int dislikeAmount) {
+    public Blog(String id,String title,String content,String authorId,String authorName,int type,Date dateCreated,int likeAmount,int dislikeAmount) {
         this.id =id;
         this.title = title;
         this.content = content;
@@ -47,6 +48,7 @@ public class Blog implements Serializable {
         this.dateCreated = dateCreated;
         this.like = likeAmount;
         this.dislike = dislikeAmount;
+        this.authorName = authorName;
     }
 
     public String getContent() {

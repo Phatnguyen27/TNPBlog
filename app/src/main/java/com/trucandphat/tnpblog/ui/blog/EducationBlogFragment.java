@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trucandphat.tnpblog.Adapter.BlogAdapter;
 import com.trucandphat.tnpblog.Model.Blog;
 import com.trucandphat.tnpblog.R;
 
@@ -27,10 +28,12 @@ public class EducationBlogFragment extends Fragment {
     private ListView mListviewEduBlog;
     private ArrayList<Blog> eduBlogList;
     private DatabaseReference dbReference;
+    private BlogAdapter adapter;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_education_blog, container, false);
         setProperties(root);
+        loadBlogs();
         return root;
     }
     public void setProperties(View view) {
@@ -55,5 +58,7 @@ public class EducationBlogFragment extends Fragment {
 
             }
         });
+        adapter = new BlogAdapter(getActivity(),R.layout.item_blog,eduBlogList);
+        mListviewEduBlog.setAdapter(adapter);
     }
 }

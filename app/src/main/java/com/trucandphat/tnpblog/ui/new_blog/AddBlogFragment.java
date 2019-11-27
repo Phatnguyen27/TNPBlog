@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.trucandphat.tnpblog.Model.Blog;
 import com.trucandphat.tnpblog.R;
+import com.trucandphat.tnpblog.ui.information.InformationFragment;
 
 import java.util.Date;
 
@@ -42,6 +44,13 @@ public class AddBlogFragment extends Fragment {
         mEditTitle = view.findViewById(R.id.edit_title);
         mEditContent = view.findViewById(R.id.edit_content);
         mFabAdd = view.findViewById(R.id.add_button);
+        mRadioGroupCategory = view.findViewById(R.id.category_radiogroup);
+        mRadioGroupCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.d("CHECK CHANGE",String.valueOf(checkedId));
+            }
+        });
         mFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View v) {
@@ -65,11 +74,13 @@ public class AddBlogFragment extends Fragment {
                 }
                 String title = mEditTitle.getText().toString();
                 String content = mEditContent.getText().toString();
+
                 if(isFullFilled(category,title,content)) {
                     DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
                     String key = dbReference.child("Blog").push().getKey();
                     String authorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    newBlog = new Blog(key,title,content,authorId,category,new Date(),0,0);
+                    String authorName = InformationFragment.userName;
+                    newBlog = new Blog(key,title,content,authorId,authorName,category,new Date(),0,0);
                     dbReference.child("Blog").child(categoryString).child(key).setValue(newBlog).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -81,7 +92,6 @@ public class AddBlogFragment extends Fragment {
                 }
             }
         });
-        mRadioGroupCategory = view.findViewById(R.id.category_radiogroup);
 
     }
     public boolean isFullFilled(int category,String title,String content) {

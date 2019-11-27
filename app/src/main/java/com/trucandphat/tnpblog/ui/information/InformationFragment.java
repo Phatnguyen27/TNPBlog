@@ -67,6 +67,7 @@ public class InformationFragment extends Fragment {
     private Uri filePath;
     private Dialog loadingDialog;
     private ProgressDialog initialDialog;
+    public static String userName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -206,6 +207,7 @@ public class InformationFragment extends Fragment {
                         mEditEmail.setText(user.getEmail());
                         mEditDOB.setText(user.getDateOfBirth().toString());
                         mEditDOC.setText(user.getDateCreated().toString());
+                        userName = user.getUsername();
                     }
                 }
             }
