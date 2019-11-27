@@ -12,6 +12,15 @@ public class Blog implements Serializable {
     private String title;
     private String authorId;
     private String authorName;
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
     private int like;
     private int dislike;
 

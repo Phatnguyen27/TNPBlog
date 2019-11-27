@@ -20,7 +20,7 @@ public class BlogAdapter extends ArrayAdapter<Blog> {
     private Context context;
     private int resource;
     private ArrayList<Blog> blogList;
-    public BlogAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Blog> objects) {
+    public BlogAdapter(Context context, int resource,ArrayList<Blog> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -41,11 +41,14 @@ public class BlogAdapter extends ArrayAdapter<Blog> {
             viewHolder = (ViewHolder)convertView.getTag();
         }
         Blog blog = blogList.get(position);
-        viewHolder.tvAuthor.setText(blog.getAuthorId());
+        viewHolder.tvAuthor.setText(blog.getAuthorName());
         viewHolder.tvTitle.setText(blog.getTitle());
         return convertView;
     }
     public class ViewHolder {
         TextView tvDate,tvAuthor,tvTitle;
+    }
+    public String getTime() {
+        return "";
     }
 }

@@ -32,6 +32,7 @@ public class AddBlogFragment extends Fragment {
     private EditText mEditTitle,mEditContent;
     private RadioGroup mRadioGroupCategory;
     private Blog newBlog;
+    private int category = -1;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,26 +49,41 @@ public class AddBlogFragment extends Fragment {
         mRadioGroupCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d("CHECK CHANGE",String.valueOf(checkedId));
+                category = checkedId;
             }
         });
         mFabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View v) {
-                int category = -1;
+                int categoryInt = -1;
                 String categoryString = "";
-                switch (mRadioGroupCategory.getCheckedRadioButtonId()) {
-                    case R.id.education_radio:
-                        category = Blog.BlogType.Education.toInt();
+//                if(category == R.id.education_radio) {
+//                    categoryInt = Blog.BlogType.Education.toInt();
+//                    Log.d("CHECK CHANGE",String.valueOf(Blog.BlogType.Education.toInt()));
+//                }else if(category == R.id.confession_radio) {
+//                    categoryInt = Blog.BlogType.Confession.toInt();
+//                    Log.d("CHECK CHANGE",String.valueOf(Blog.BlogType.Confession.toInt()));
+//
+//                }else if (category == R.id.entertainment_radio) {
+//                    categoryInt = Blog.BlogType.Entertainment.toInt();
+//                    Log.d("CHECK CHANGE",String.valueOf(Blog.BlogType.Entertainment.toInt()));
+//
+//                }
+                switch (category) {
+                    case (R.id.education_radio):
+                        categoryInt = Blog.BlogType.Education.toInt();
                         categoryString = Blog.BlogType.Education.toString();
+                        Log.d("CHECK CHANGE",String.valueOf(R.id.education_radio));
                         break;
-                    case R.id.confession_radio:
-                        category = Blog.BlogType.Confession.toInt();
+                    case (R.id.confession_radio):
+                        categoryInt = Blog.BlogType.Confession.toInt();
                         categoryString = Blog.BlogType.Confession.toString();
+                        Log.d("CHECK CHANGE",String.valueOf(R.id.confession_radio));
                         break;
-                    case R.id.entertainment_radio:
-                        category = Blog.BlogType.Entertainment.toInt();
+                    case (R.id.entertainment_radio):
+                        categoryInt = Blog.BlogType.Entertainment.toInt();
                         categoryString = Blog.BlogType.Entertainment.toString();
+                        Log.d("CHECK CHANGE",String.valueOf(R.id.entertainment_radio));
                         break;
                         default:
                             break;
@@ -75,12 +91,13 @@ public class AddBlogFragment extends Fragment {
                 String title = mEditTitle.getText().toString();
                 String content = mEditContent.getText().toString();
 
-                if(isFullFilled(category,title,content)) {
+                if(isFullFilled(categoryInt,title,content)) {
                     DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
                     String key = dbReference.child("Blog").push().getKey();
                     String authorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     String authorName = InformationFragment.userName;
-                    newBlog = new Blog(key,title,content,authorId,authorName,category,new Date(),0,0);
+                    newBlog = new Blog(key,title,content,authorId,authorName,categoryInt,new Date(),0,0);
+                    Log.d("Username",newBlog.getAuthorName());
                     dbReference.child("Blog").child(categoryString).child(key).setValue(newBlog).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -95,7 +112,7 @@ public class AddBlogFragment extends Fragment {
 
     }
     public boolean isFullFilled(int category,String title,String content) {
-        if (category == -1) {
+        if (category == (-1)) {
             Toast.makeText(getActivity(),"Please choose your blog's category",Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -106,10 +123,11 @@ public class AddBlogFragment extends Fragment {
                 if (content.length() == 0) {
                     Toast.makeText(getActivity(),"Please input your blog's content",Toast.LENGTH_LONG).show();
                     return false;
-                } else if (content.length() < 250) {
-                    Toast.makeText(getActivity(),"Please choose your blog's category",Toast.LENGTH_LONG).show();
+                } else if (content.length() < 1) {
+                    Toast.makeText(getActivity(),"Your blog's content must contain 250 digits or more",Toast.LENGTH_LONG).show();
                     return false;
                 } else {
+                    Log.d("CHECK Status","done");
                     return true;
                 }
             }

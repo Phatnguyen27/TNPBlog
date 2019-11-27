@@ -208,6 +208,7 @@ public class InformationFragment extends Fragment {
                         mEditDOB.setText(user.getDateOfBirth().toString());
                         mEditDOC.setText(user.getDateCreated().toString());
                         userName = user.getUsername();
+                        Log.d("Username",userName);
                     }
                 }
             }

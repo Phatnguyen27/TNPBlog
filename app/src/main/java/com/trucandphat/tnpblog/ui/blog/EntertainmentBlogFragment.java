@@ -39,7 +39,9 @@ public class EntertainmentBlogFragment extends Fragment {
     public void setProperties(View view) {
         mListviewEntertainmentBlog = view.findViewById(R.id.entertainment_blog_listview);
         enteitainmentBlogList = new ArrayList<Blog>();
-        dbReference = FirebaseDatabase.getInstance().getReference().child("Diary").child("entertainment");
+        dbReference = FirebaseDatabase.getInstance().getReference().child("Blog").child("Entertainment");
+        adapter = new BlogAdapter(getContext(),R.layout.item_blog,enteitainmentBlogList);
+        mListviewEntertainmentBlog.setAdapter(adapter);
     }
     public void loadBlogs() {
         dbReference.addValueEventListener(new ValueEventListener() {
@@ -50,6 +52,7 @@ public class EntertainmentBlogFragment extends Fragment {
                         Blog blogItem = data.getValue(Blog.class);
                         enteitainmentBlogList.add(blogItem);
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -58,7 +61,6 @@ public class EntertainmentBlogFragment extends Fragment {
 
             }
         });
-        adapter = new BlogAdapter(getActivity(),R.layout.item_blog,enteitainmentBlogList);
-        mListviewEntertainmentBlog.setAdapter(adapter);
+
     }
 }

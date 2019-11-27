@@ -40,7 +40,9 @@ public class ConfessionBlogFragment extends Fragment {
     public void setProperties(View view) {
         mListviewConfessionBlog = view.findViewById(R.id.confession_blog_listview);
         confessionBlogList = new ArrayList<Blog>();
-        dbReference = FirebaseDatabase.getInstance().getReference().child("Diary").child("confession");
+        dbReference = FirebaseDatabase.getInstance().getReference().child("Blog").child("Confession");
+        adapter = new BlogAdapter(getActivity(),R.layout.item_blog,confessionBlogList);
+        mListviewConfessionBlog.setAdapter(adapter);
     }
     public void loadBlogs() {
         dbReference.addValueEventListener(new ValueEventListener() {
@@ -51,6 +53,7 @@ public class ConfessionBlogFragment extends Fragment {
                         Blog blogItem = data.getValue(Blog.class);
                         confessionBlogList.add(blogItem);
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -59,7 +62,6 @@ public class ConfessionBlogFragment extends Fragment {
 
             }
         });
-        adapter = new BlogAdapter(getActivity(),R.layout.item_blog,confessionBlogList);
-        mListviewConfessionBlog.setAdapter(adapter);
+
     }
 }

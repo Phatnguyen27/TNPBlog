@@ -20,15 +20,15 @@ import java.util.List;
 
 public class BlogFragment extends Fragment {
     private ViewPager mViewPager;
-    private TabLayout tabLayout;
+    //private TabLayout tabLayout;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_blogs, container, false);
-        tabLayout = root.findViewById(R.id.blog_tabLayout);
+        //tabLayout = root.findViewById(R.id.blog_tabLayout);
         mViewPager = root.findViewById(R.id.blog_pager);
         //FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         mViewPager.setAdapter(new BlogPageAdapter(getFragmentManager()));
-        tabLayout.setupWithViewPager(mViewPager);
+        //tabLayout.setupWithViewPager(mViewPager);
         return root;
     }
 }
