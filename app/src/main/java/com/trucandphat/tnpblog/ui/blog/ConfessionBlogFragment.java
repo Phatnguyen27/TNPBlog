@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,6 +25,7 @@ public class ConfessionBlogFragment extends Fragment {
     private ListView mListviewConfessionBlog;
     private ArrayList<Blog> confessionBlogList;
     private DatabaseReference dbReference;
+    private TextView tv;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_confession_blog, container, false);
@@ -34,5 +36,7 @@ public class ConfessionBlogFragment extends Fragment {
         mListviewConfessionBlog = view.findViewById(R.id.confession_blog_listview);
         confessionBlogList = new ArrayList<Blog>();
         dbReference = FirebaseDatabase.getInstance().getReference().child("Diary").child("Confession");
+        tv = view.findViewById(R.id.tv_confession);
+        tv.setText("Confession");
     }
 }

@@ -96,7 +96,6 @@ public class InformationFragment extends Fragment {
         initialDialog.dismiss();
         return root;
     }
-
     public void initiateDialog() {
         initialDialog = new ProgressDialog(getActivity());
         initialDialog.setTitle("Loading Information...");

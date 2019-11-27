@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,15 +24,18 @@ public class EntertainmentBlogFragment extends Fragment {
     private ListView mListviewEntertainmentBlog;
     private ArrayList<Blog> enteitainmentBlogList;
     private DatabaseReference dbReference;
+    private TextView tv;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_entertainment_blog, container, false);
-        setProperties(root);
+        setProperties(root);    
         return root;
     }
     public void setProperties(View view) {
         mListviewEntertainmentBlog = view.findViewById(R.id.entertainment_blog_listview);
         enteitainmentBlogList = new ArrayList<Blog>();
         dbReference = FirebaseDatabase.getInstance().getReference().child("Diary").child("Entertainment");
+        tv = view.findViewById(R.id.tv_entertainment);
+        tv.setText("Entertaiment");
     }
 }
