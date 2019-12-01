@@ -12,6 +12,15 @@ public class Blog implements Serializable {
     private String title;
     private String authorId;
     private String authorName;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getAuthorName() {
         return authorName;
@@ -48,7 +57,8 @@ public class Blog implements Serializable {
 
     public Blog() {}
 
-    public Blog(String id,String title,String content,String authorId,String authorName,int type,Date dateCreated,int likeAmount,int dislikeAmount) {
+    public Blog(String avatar, String id,String title,String content,String authorId,String authorName,int type,Date dateCreated,int likeAmount,int dislikeAmount) {
+        this.avatar = avatar;
         this.id =id;
         this.title = title;
         this.content = content;

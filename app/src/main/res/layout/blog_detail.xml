@@ -2,94 +2,131 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/author_area"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:paddingLeft="10dp"
-                    android:id="@+id/avatar"
-                    android:background="@drawable/avatar"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"></ImageView>
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/tv_itemUserPost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Author"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/title_area"
+    <RelativeLayout
+        android:id="@+id/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            android:minHeight="?android:attr/actionBarSize"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/tvDetailName"
+                android:gravity="center"
+                android:textSize="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@+id/author_area">
-                <TextView
-                    android:layout_marginLeft="30dp"
-                    android:id="@+id/tv_itemDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="6 days ago"
-                    android:textSize="20sp" />
-                <TextView
-                    android:layout_marginLeft="30dp"
-                    android:id="@+id/tv_itemTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Title"
-                    android:textStyle="bold"
-                    android:textSize="25sp" />
-                <TextView
-                    android:layout_marginLeft="30dp"
-                    android:id="@+id/tv_itemContent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="This is a good day"
-                    android:textSize="20sp" />
+                android:maxLines="2"
+                style="@style/headerText"
+                android:text="Detail" />
 
-                <TextView
-                    android:id="@+id/img_blog"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"></TextView>
-            </LinearLayout>
-            <LinearLayout
+        </androidx.appcompat.widget.Toolbar>
+
+        <Button
+            android:id="@+id/btnBackDetail"
+            android:layout_centerVertical="true"
+            android:paddingStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_navigate_before"
+            android:background="?android:attr/selectableItemBackground"/>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_below="@+id/layout_toolbar"
+        android:id="@+id/author_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:paddingLeft="10dp"
+            android:id="@+id/avatar"
+            android:background="@drawable/avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"></ImageView>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/UserPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Author"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/title_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/author_area">
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:id="@+id/tv_itemDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="6 days ago"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:id="@+id/tv_itemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:id="@+id/tv_itemContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="This is a good day"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:background="@drawable/ic_gamepad"
+            android:id="@+id/img_blog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"></ImageView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/like_blog"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:weightSum="2"
-                android:orientation="horizontal"
-                android:layout_alignParentBottom="true"
-                >
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageButton
-                        android:id="@+id/like_blog"
-                        android:layout_gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_thumb_up_black_24dp"></ImageButton>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <Button
-                        android:id="@+id/comment_blog"
-                        android:textSize="20dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Comment"></Button>
-                </LinearLayout>
-            </LinearLayout>
+                android:src="@drawable/ic_thumb_up_black_24dp"></ImageButton>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/comment_blog"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Comment"></Button>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
