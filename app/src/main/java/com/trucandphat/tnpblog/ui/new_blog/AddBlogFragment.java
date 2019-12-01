@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.trucandphat.tnpblog.Model.Blog;
+import com.trucandphat.tnpblog.Model.User;
 import com.trucandphat.tnpblog.R;
 import com.trucandphat.tnpblog.ui.information.InformationFragment;
 
@@ -96,7 +97,7 @@ public class AddBlogFragment extends Fragment {
                     String key = dbReference.child("Blog").push().getKey();
                     String authorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     String authorName = InformationFragment.userName;
-                    newBlog = new Blog(key,title,content,authorId,authorName,categoryInt,new Date(),0,0);
+                    newBlog = new Blog(User.getCurrentUser().getAvatar(),key,title,content,authorId,authorName,categoryInt,new Date(),0,0);
                     Log.d("Username",newBlog.getAuthorName());
                     dbReference.child("Blog").child(categoryString).child(key).setValue(newBlog).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
