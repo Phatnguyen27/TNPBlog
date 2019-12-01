@@ -57,7 +57,11 @@ public class BlogsDetailActivity extends AppCompatActivity {
         mTv_itemDate.setText(blog.getDateCreated().toString());
         mTv_itemTitle.setText(blog.getTitle());
         mTv_itemContent.setText(blog.getContent());
-        //img_blog waiting
+        //img_blog
+        if(blog.getImageblog() != null) {
+            new DownloadImageFromInternet(mImageBlog)
+                    .execute(blog.getImageblog());
+        }
         mBackDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

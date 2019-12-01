@@ -14,6 +14,25 @@ public class Blog implements Serializable {
     private String authorName;
     private String avatar;
 
+    public String getImageblog() {
+        return imageblog;
+    }
+
+    public void setImageblog(String imageblog) {
+        this.imageblog = imageblog;
+    }
+
+    private String imageblog;
+    private String UidBlog;
+
+    public String getUidBlog() {
+        return UidBlog;
+    }
+
+    public void setUidBlog(String uidBlog) {
+        UidBlog = uidBlog;
+    }
+
     public String getAvatar() {
         return avatar;
     }
@@ -57,7 +76,7 @@ public class Blog implements Serializable {
 
     public Blog() {}
 
-    public Blog(String avatar, String id,String title,String content,String authorId,String authorName,int type,Date dateCreated,int likeAmount,int dislikeAmount) {
+    public Blog(String avatar, String id,String title,String content,String authorId,String authorName,int type,Date dateCreated,String imageblog,int likeAmount,int dislikeAmount) {
         this.avatar = avatar;
         this.id =id;
         this.title = title;
@@ -68,6 +87,7 @@ public class Blog implements Serializable {
         this.like = likeAmount;
         this.dislike = dislikeAmount;
         this.authorName = authorName;
+        this.imageblog = imageblog;
     }
 
     public String getContent() {
