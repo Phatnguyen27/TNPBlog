@@ -3,6 +3,7 @@ package com.trucandphat.tnpblog.ui.blog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.trucandphat.tnpblog.Model.Blog;
 import com.trucandphat.tnpblog.R;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class BlogsDetailActivity extends AppCompatActivity {
     private ImageView mAvatar, mImageBlog;
@@ -44,6 +46,10 @@ public class BlogsDetailActivity extends AppCompatActivity {
 //            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 //            this.mAvatar.setImageBitmap(myBitmap);
 //        }
+        if(blog.getAvatar() != null) {
+            new DownloadImageFromInternet(mAvatar)
+                    .execute(blog.getAvatar());
+        }
         mUserPost.setText(blog.getAuthorName());
         mTv_itemDate.setText(blog.getDateCreated().toString());
         mTv_itemTitle.setText(blog.getTitle());
@@ -65,5 +71,33 @@ public class BlogsDetailActivity extends AppCompatActivity {
         mTv_itemDate = findViewById(R.id.tv_itemDate);
         mTv_itemTitle = findViewById(R.id.tv_itemTitle);
         mTv_itemContent = findViewById(R.id.tv_itemContent);
+    }
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+
+        ImageView imageView;
+
+        public DownloadImageFromInternet(ImageView imageView){
+            this.imageView = imageView;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL = urls[0];
+            Bitmap bimage = null;
+            try {
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
+
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
 }
