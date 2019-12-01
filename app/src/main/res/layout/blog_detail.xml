@@ -42,12 +42,12 @@
         android:id="@+id/author_area"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:paddingLeft="10dp"
             android:id="@+id/avatar"
-            android:background="@drawable/avatar"
+            android:src="@drawable/avatar"
             android:layout_width="50dp"
-            android:layout_height="50dp"></ImageView>
+            android:layout_height="50dp"></de.hdodenhof.circleimageview.CircleImageView>
         <TextView
             android:layout_marginLeft="10dp"
             android:id="@+id/UserPost"

@@ -21,8 +21,11 @@ import com.trucandphat.tnpblog.R;
 import java.io.File;
 import java.io.InputStream;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class BlogsDetailActivity extends AppCompatActivity {
-    private ImageView mAvatar, mImageBlog;
+    private ImageView mImageBlog;
+    private CircleImageView mAvatar;
     private TextView mUserPost, mTv_itemDate, mTv_itemTitle, mTv_itemContent;
     private Button mBackDetail;
     @Override
