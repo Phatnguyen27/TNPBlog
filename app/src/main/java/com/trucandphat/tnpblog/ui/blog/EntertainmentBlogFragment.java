@@ -1,6 +1,7 @@
 package com.trucandphat.tnpblog.ui.blog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,6 +36,16 @@ public class EntertainmentBlogFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_entertainment_blog, container, false);
         setProperties(root);
         loadBlogs();
+        mListviewEntertainmentBlog.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent= new Intent(getContext(),BlogsDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Blog_Detail",enteitainmentBlogList.get(i));
+                intent.putExtra("package", bundle);
+                startActivity(intent);
+            }
+        });
         return root;
     }
     public void setProperties(View view) {
