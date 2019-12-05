@@ -20,6 +20,7 @@ import java.util.List;
 
 public class BlogFragment extends Fragment {
     private ViewPager mViewPager;
+    public static final int RequestCode_View = 763;
     //private TabLayout tabLayout;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

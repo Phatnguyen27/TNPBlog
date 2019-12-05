@@ -6,12 +6,40 @@ import java.util.Date;
 
 public class Blog implements Serializable {
     private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     private String content;
     private Date dateCreated;
     private int type;
     private String title;
     private String authorId;
     private String authorName;
+    private String avatar;
+
+    public String getImageblog() {
+        return imageblog;
+    }
+
+    public void setImageblog(String imageblog) {
+        this.imageblog = imageblog;
+    }
+
+    private String imageblog;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getAuthorName() {
         return authorName;
@@ -48,7 +76,8 @@ public class Blog implements Serializable {
 
     public Blog() {}
 
-    public Blog(String id,String title,String content,String authorId,String authorName,int type,Date dateCreated,int likeAmount,int dislikeAmount) {
+    public Blog(String avatar, String id,String title,String content,String authorId,String authorName,int type,Date dateCreated,String imageblog,int likeAmount,int dislikeAmount) {
+        this.avatar = avatar;
         this.id =id;
         this.title = title;
         this.content = content;
@@ -58,6 +87,7 @@ public class Blog implements Serializable {
         this.like = likeAmount;
         this.dislike = dislikeAmount;
         this.authorName = authorName;
+        this.imageblog = imageblog;
     }
 
     public String getContent() {

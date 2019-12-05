@@ -149,10 +149,10 @@ public class InformationFragment extends Fragment {
                             });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(),"fail_something1",Toast.LENGTH_SHORT).show();
-                        }
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(),"fail_something1",Toast.LENGTH_SHORT).show();
+                            }
                     });
                 }
             }).addOnFailureListener(new OnFailureListener() {
