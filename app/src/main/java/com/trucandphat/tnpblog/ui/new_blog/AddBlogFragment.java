@@ -62,6 +62,7 @@ public class AddBlogFragment extends Fragment {
     private String UidBlog;
     private Uri Uri = ;
     private String categoryString1; // lấy categoryString
+    private boolean coanh = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class AddBlogFragment extends Fragment {
         mImageBlog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                coanh = true;
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent,GALLERY_REQUEST);
@@ -150,45 +152,48 @@ public class AddBlogFragment extends Fragment {
                     });
 
                     //thêm ảnh
-                    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-                    final StorageReference reference = storageReference.child("BlogImage/"+categoryString+"/"+UidBlog);
-                    categoryString1 = categoryString; //a copy BlogType
-                    reference.putFile(Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Map<String, Object> data = new HashMap<>();
-                                    data.put("imageblog",uri.toString());
+                    if (coanh == true){
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                        final StorageReference reference = storageReference.child("BlogImage/"+categoryString+"/"+UidBlog);
+                        categoryString1 = categoryString; //a copy BlogType
+                        reference.putFile(Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Map<String, Object> data = new HashMap<>();
+                                        data.put("imageblog",uri.toString());
 
-                                    FirebaseDatabase.getInstance().getReference().child("Blog")
-                                            .child(categoryString1).child(UidBlog).updateChildren(data)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
+                                        FirebaseDatabase.getInstance().getReference().child("Blog")
+                                                .child(categoryString1).child(UidBlog).updateChildren(data)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
 
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getContext(),"fail_lan_cuoi",Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getContext(),"fail_something1",Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(),"fail_up_image",Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getContext(),"fail_lan_cuoi",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(),"fail_something1",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(),"fail_up_image",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
                 }
             }
         });
