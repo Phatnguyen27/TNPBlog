@@ -60,7 +60,7 @@ public class AddBlogFragment extends Fragment {
     private ProgressDialog initialDialog;
     private Bitmap selectedImage;
     private String UidBlog;
-    private Uri Uri = ;
+    private Uri Uri;
     private String categoryString1; // lấy categoryString
     private boolean coanh = false;
 

@@ -66,6 +66,7 @@ public class ConfessionBlogFragment extends Fragment {
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                confessionBlogList.clear();
                 if(dataSnapshot.exists()) {
                     for(DataSnapshot data : dataSnapshot.getChildren()) {
                         Blog blogItem = data.getValue(Blog.class);

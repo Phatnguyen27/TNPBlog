@@ -75,11 +75,17 @@ public class BlogsDetailActivity extends AppCompatActivity {
     }
 
     private void loadBlog() {
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
                     blog = dataSnapshot.getValue(Blog.class);
+                    loadInformation();
+                    loadImage();
+                }
+                else {
+                    finish();
                 }
             }
 
@@ -91,27 +97,18 @@ public class BlogsDetailActivity extends AppCompatActivity {
         checkLikingStatus();
     }
 
-    private void setEvent() {
-        //get package
-        //avatar
-//        File imgFile = new  File(blog.getAvatar());
-//        if(imgFile.exists()) {
-//            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//            this.mAvatar.setImageBitmap(myBitmap);
-//        }
+    private void loadImage() {
         if(blog.getAvatar() != null) {
             new DownloadImageFromInternet(mAvatar)
                     .execute(blog.getAvatar());
         }
-        mUserPost.setText(blog.getAuthorName());
-        mTv_itemDate.setText(blog.getDateCreated().toString());
-        mTv_itemTitle.setText(blog.getTitle());
-        mTv_itemContent.setText(blog.getContent());
-        //img_blog
         if(blog.getImageblog() != null) {
             new DownloadImageFromInternet(mImageBlog)
                     .execute(blog.getImageblog());
         }
+    }
+
+    private void setEvent() {
         mBackDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,10 +118,30 @@ public class BlogsDetailActivity extends AppCompatActivity {
         mLikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeBlog();
+                if(liked) dislikeBlog();
+                else likeBlog();
             }
         });
         loadingDialog.dismiss();
+    }
+
+    private void loadInformation() {
+        mUserPost.setText(blog.getAuthorName());
+        mTv_itemDate.setText(blog.getDateCreated().toString());
+        mTv_itemTitle.setText(blog.getTitle());
+        mTv_itemContent.setText(blog.getContent());
+    }
+
+    private void dislikeBlog() {
+        databaseReference.child("likingUsers").child(userId).setValue(null)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            mLikeButton.setImageResource(R.drawable.ic_thumb_up_black_24dp);
+                        }
+                    }
+                });
     }
 
     private void likeBlog() {

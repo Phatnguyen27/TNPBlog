@@ -1,5 +1,6 @@
 package com.trucandphat.tnpblog.ui.blog;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -64,6 +65,7 @@ public class EntertainmentBlogFragment extends Fragment {
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                enteitainmentBlogList.clear();
                 if(dataSnapshot.exists()) {
                     for(DataSnapshot data : dataSnapshot.getChildren()) {
                         Blog blogItem = data.getValue(Blog.class);
@@ -80,5 +82,13 @@ public class EntertainmentBlogFragment extends Fragment {
             }
         });
 
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK) {
+            if(requestCode == BlogFragment.RequestCode_View) {
+                loadBlogs();
+            }
+        }
     }
 }

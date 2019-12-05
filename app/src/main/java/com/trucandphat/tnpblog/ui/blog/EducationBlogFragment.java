@@ -67,6 +67,7 @@ public class EducationBlogFragment extends Fragment {
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                eduBlogList.clear();
                 if(dataSnapshot.exists()) {
                     for(DataSnapshot data : dataSnapshot.getChildren()) {
                         Blog blogItem = data.getValue(Blog.class);
@@ -90,4 +91,5 @@ public class EducationBlogFragment extends Fragment {
             }
         }
     }
+
 }
