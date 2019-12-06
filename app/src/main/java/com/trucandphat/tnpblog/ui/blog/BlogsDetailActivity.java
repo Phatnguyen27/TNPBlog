@@ -271,5 +271,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
         String content = editTextComment.getText().toString();
         Comment comment = new Comment(authorName,content);
         databaseReference.child("Comment").push().setValue(comment);
+        commentList.add(comment);
+        adapter.notifyDataSetChanged();
     }
 }

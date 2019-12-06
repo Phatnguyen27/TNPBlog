@@ -4,6 +4,15 @@ public class Comment {
     private String authorName;
     private String content;
 
+    public Comment() {
+
+    }
+
+    public Comment(Comment c) {
+        this.authorName = c.getAuthorName();
+        this.content = c.getContent();
+    }
+
     public Comment(String authorName,String content) {
         this.authorName = authorName;
         this.content = content;
