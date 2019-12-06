@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +30,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trucandphat.tnpblog.Adapter.CommentAdapter;
 import com.trucandphat.tnpblog.Model.Blog;
+import com.trucandphat.tnpblog.Model.Comment;
 import com.trucandphat.tnpblog.R;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -39,7 +45,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
     private ImageView mImageBlog;
     private CircleImageView mAvatar;
     private TextView mUserPost, mTv_itemDate, mTv_itemTitle, mTv_itemContent;
-    private Button mBackDetail;
+    private Button mBackDetail,mCommentButton;
     private ImageButton mLikeButton;
     private Blog blog;
     private String category,blogId;
@@ -47,6 +53,10 @@ public class BlogsDetailActivity extends AppCompatActivity {
     private ProgressDialog loadingDialog;
     private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private boolean liked = false;
+    private ListView mCommentListView;
+    private CommentAdapter adapter;
+    private ArrayList<Comment> commentList = new ArrayList<>();
+    private LinearLayout commentInputLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -122,6 +132,13 @@ public class BlogsDetailActivity extends AppCompatActivity {
                 else likeBlog();
             }
         });
+        mCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadComment();
+                mCommentButton.setClickable(false);
+            }
+        });
         loadingDialog.dismiss();
     }
 
@@ -192,6 +209,12 @@ public class BlogsDetailActivity extends AppCompatActivity {
         loadingDialog.setTitle("Loading blog's content");
         loadingDialog.setMessage("Please wait...");
         loadingDialog.show();
+        mCommentListView = findViewById(R.id.lvComment);
+        adapter = new CommentAdapter(this,R.layout.comment_item,commentList);
+        mCommentListView.setAdapter(adapter);
+        commentInputLayout = findViewById(R.id.comment_input_layout);
+        commentInputLayout.setVisibility(LinearLayout.GONE);
+        mCommentButton = findViewById(R.id.comment_blog);
     }
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
 
@@ -220,5 +243,33 @@ public class BlogsDetailActivity extends AppCompatActivity {
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }
+    }
+
+    private void loadComment() {
+        databaseReference.child("Comment").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    for (DataSnapshot i : dataSnapshot.getChildren()) {
+                        Comment comment = i.getValue(Comment.class);
+                        commentList.add(comment);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+                commentInputLayout.setVisibility(LinearLayout.VISIBLE);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void postComment(View v) {
+        String authorName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        EditText editTextComment = findViewById(R.id.edit_comment);
+        String content = editTextComment.getText().toString();
+        Comment comment = new Comment(authorName,content);
+        databaseReference.child("Comment").push().setValue(comment);
     }
 }

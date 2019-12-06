@@ -133,13 +133,14 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <Button
                         android:id="@+id/comment_blog"
-                        android:textSize="20dp"
-                        android:gravity="center"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Comment"></Button>
+                        android:layout_height="36dp"
+                        android:gravity="center"
+                        android:text="Comment"
+                        android:textSize="20dp"></Button>
                 </LinearLayout>
             </LinearLayout>
             <ListView
@@ -148,51 +149,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"></ListView>
             <LinearLayout
-                android:layout_marginBottom="10dp"
-                android:layout_below="@+id/lvComment"
+                android:id="@+id/comment_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:paddingLeft="10dp"
-                        android:id="@+id/avatar_comment"
-                        android:src="@drawable/avatar"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"></de.hdodenhof.circleimageview.CircleImageView>
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:id="@+id/usercomment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Author"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/time_comment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1 hour ago"></TextView>
-                    <EditText
-                        android:id="@+id/content_comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:hint="comment here!"></EditText>
-                </LinearLayout>
+                android:layout_below="@+id/lvComment">
+                <include layout="@layout/comment_input_layout"/>
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

@@ -135,7 +135,7 @@ public class AddBlogFragment extends Fragment {
 
                 if(isFullFilled(categoryInt,title,content)) {
                     DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
-                    String key = dbReference.child("Blog").push().getKey();
+                    String key = dbReference.child("Blog").child(categoryString).push().getKey();
                     //lấy UidBlog
                     UidBlog = key;
                     String authorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
