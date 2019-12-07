@@ -112,10 +112,27 @@
                     android:layout_margin="20dp"
                     android:src="@drawable/ic_gamepad"></ImageView>
             </LinearLayout>
-
+            <LinearLayout
+                android:id="@+id/total_like_area"
+                android:layout_below="@+id/title_area"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/ic_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></ImageView>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:text="số like"
+                    android:id="@+id/total_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/likecomment_area"
-                android:layout_below="@+id/title_area"
+                android:layout_below="@+id/total_like_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"

@@ -47,7 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class BlogsDetailActivity extends AppCompatActivity {
     private ImageView mImageBlog;
     private CircleImageView mAvatar;
-    private TextView mUserPost, mTv_itemDate, mTv_itemTitle, mTv_itemContent;
+    private TextView mUserPost, mTv_itemDate, mTv_itemTitle, mTv_itemContent, mTv_totalLike;
     private Button mBackDetail,mCommentButton;
     private ImageButton mLikeButton;
     private Blog blog;
@@ -155,6 +155,8 @@ public class BlogsDetailActivity extends AppCompatActivity {
         mTv_itemDate.setText(getDateDifference(blog.getDateCreated()));
         mTv_itemTitle.setText(blog.getTitle());
         mTv_itemContent.setText(blog.getContent());
+        mTv_totalLike.setText(blog.getLike()+"");
+
     }
     private String getDateDifference(Date date) {
         String datediff = "";
@@ -237,6 +239,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
         mTv_itemTitle = findViewById(R.id.tv_itemTitle);
         mTv_itemContent = findViewById(R.id.tv_itemContent);
         mLikeButton = findViewById(R.id.like_blog_button);
+        mTv_totalLike = findViewById(R.id.total_like);
         //Dialog
         loadingDialog = new ProgressDialog(this);
         loadingDialog.setTitle("Loading blog's content");
