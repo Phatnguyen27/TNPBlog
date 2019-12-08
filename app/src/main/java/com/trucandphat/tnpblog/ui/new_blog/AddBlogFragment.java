@@ -62,6 +62,7 @@ public class AddBlogFragment extends Fragment {
     private String UidBlog;
     private Uri Uri;
     private String categoryString1; // lấy categoryString
+    private boolean coanh = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class AddBlogFragment extends Fragment {
         mImageBlog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                coanh = true;
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent,GALLERY_REQUEST);
@@ -150,7 +152,7 @@ public class AddBlogFragment extends Fragment {
                     });
 
                     //thêm ảnh
-                    if ( Uri != null){
+                    if (coanh == true){
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                         final StorageReference reference = storageReference.child("BlogImage/"+categoryString+"/"+UidBlog);
                         categoryString1 = categoryString; //a copy BlogType
