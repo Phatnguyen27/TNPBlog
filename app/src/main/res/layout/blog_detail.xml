@@ -106,9 +106,10 @@
                     android:textSize="20sp" />
 
                 <ImageView
+                    android:layout_gravity="center"
                     android:id="@+id/img_blog"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:src="@drawable/ic_gamepad"></ImageView>
             </LinearLayout>
@@ -162,18 +163,22 @@
                         android:textSize="20dp"></Button>
                 </LinearLayout>
             </LinearLayout>
-            <ListView
-                android:id="@+id/lvComment"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_below="@+id/likecomment_area"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"></ListView>
-            <LinearLayout
-                android:layout_below="@+id/lvComment"
-                android:id="@+id/comment_input_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-                <include layout="@layout/comment_input_layout"/>
+                android:layout_height="match_parent">
+                <ListView
+                    android:id="@+id/lvComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="600dp"></ListView>
+                <LinearLayout
+                    android:layout_gravity="bottom"
+                    android:id="@+id/comment_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include layout="@layout/comment_input_layout"/>
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
