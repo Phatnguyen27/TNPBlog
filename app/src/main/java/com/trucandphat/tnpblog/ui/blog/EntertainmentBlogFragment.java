@@ -64,7 +64,6 @@ public class EntertainmentBlogFragment extends Fragment {
         loadingDialog.setMessage("Please wait ...");
         loadingDialog.show();
         dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 enteitainmentBlogList.clear();
