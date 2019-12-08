@@ -42,7 +42,7 @@ public class EducationBlogFragment extends Fragment {
         dbReference = FirebaseDatabase.getInstance().getReference().child("Diary").child("Education");
     }
     public void loadBlogs() {
-        dbReference.addValueEventListener(new ValueEventListener() {
+        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
