@@ -246,7 +246,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
     }
 
     private void loadComment() {
-        databaseReference.child("Comment").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Comment").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
@@ -271,7 +271,5 @@ public class BlogsDetailActivity extends AppCompatActivity {
         String content = editTextComment.getText().toString();
         Comment comment = new Comment(authorName,content);
         databaseReference.child("Comment").push().setValue(comment);
-        commentList.add(comment);
-        adapter.notifyDataSetChanged();
     }
 }
