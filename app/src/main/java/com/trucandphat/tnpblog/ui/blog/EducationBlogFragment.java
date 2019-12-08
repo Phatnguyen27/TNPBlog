@@ -28,6 +28,9 @@ import com.trucandphat.tnpblog.Model.Blog;
 import com.trucandphat.tnpblog.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class EducationBlogFragment extends Fragment {
     private ProgressDialog loadingDialog;
@@ -73,6 +76,7 @@ public class EducationBlogFragment extends Fragment {
                         Blog blogItem = data.getValue(Blog.class);
                         eduBlogList.add(blogItem);
                     }
+                    sortBlog(eduBlogList);
                     adapter.notifyDataSetChanged();
                 }
                 loadingDialog.dismiss();
@@ -90,6 +94,20 @@ public class EducationBlogFragment extends Fragment {
                 loadBlogs();
             }
         }
+    }
+    public static void sortBlog(List<Blog> BlogItems) {
+        Collections.sort(BlogItems, new Comparator<Blog>() {
+            @Override
+            public int compare(Blog o1, Blog o2) {
+                if (o1.getDateCreated().equals(o2.getDateCreated())) {
+                    return 0;
+                } else if (o1.getDateCreated().before(o2.getDateCreated())) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
     }
 
 }
