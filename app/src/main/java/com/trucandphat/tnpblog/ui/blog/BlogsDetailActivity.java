@@ -155,7 +155,8 @@ public class BlogsDetailActivity extends AppCompatActivity {
         mTv_itemDate.setText(getDateDifference(blog.getDateCreated()));
         mTv_itemTitle.setText(blog.getTitle());
         mTv_itemContent.setText(blog.getContent());
-        mTv_totalLike.setText(blog.getLike()+"");
+        //lấy total like
+        checkTotalLike();
 
     }
     private String getDateDifference(Date date) {
@@ -191,6 +192,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
                             mLikeButton.setImageResource(R.drawable.ic_thumb_up_black_24dp);
+                            loadInformation(); //load lại
                         }
                     }
                 });
@@ -203,9 +205,29 @@ public class BlogsDetailActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
                             mLikeButton.setImageResource(R.drawable.ic_thumb_up_success_24dp);
+                            loadInformation();// load lại
                         }
                     }
                 });
+    }
+    private void checkTotalLike(){
+        databaseReference.child("likingUsers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    int count =0;
+                    for (DataSnapshot i :dataSnapshot.getChildren()){
+                        count++;
+                    }
+                    mTv_totalLike.setText(count+"");
+                } else mTv_totalLike.setText(0+"");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void checkLikingStatus() {
