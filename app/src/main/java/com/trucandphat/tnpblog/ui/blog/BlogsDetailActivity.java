@@ -304,6 +304,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
     }
 
     private void loadComment() {
+        commentList.clear();
         databaseReference.child("Comment").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -330,5 +331,8 @@ public class BlogsDetailActivity extends AppCompatActivity {
         String content = editTextComment.getText().toString();
         Comment comment = new Comment(authorName,content);
         databaseReference.child("Comment").push().setValue(comment);
+        loadComment();
+        editTextComment.setText("");
+        Toast.makeText(getApplicationContext(),"Comment complete!",Toast.LENGTH_SHORT).show();
     }
 }

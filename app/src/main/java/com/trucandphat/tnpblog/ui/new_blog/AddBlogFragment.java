@@ -150,7 +150,7 @@ public class AddBlogFragment extends Fragment {
                     });
 
                     //thêm ảnh
-                    if ( Uri != null){
+                    if (Uri != null){
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                         final StorageReference reference = storageReference.child("BlogImage/"+categoryString+"/"+UidBlog);
                         categoryString1 = categoryString; //a copy BlogType
