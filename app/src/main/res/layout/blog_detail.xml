@@ -167,11 +167,13 @@
                 android:layout_below="@+id/likecomment_area"
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
-                android:scrollbars="vertical">
+                android:layout_marginRight="20dp"
+                android:scrollbars="vertical"
+                >
             <ListView
                 android:id="@+id/lvComment"
                 android:layout_below="@+id/likecomment_area"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="300dp"></ListView>
             </ScrollView>
             <LinearLayout

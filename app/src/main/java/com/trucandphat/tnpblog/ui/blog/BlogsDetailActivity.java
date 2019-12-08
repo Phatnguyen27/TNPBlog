@@ -231,7 +231,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
     }
 
     private void checkLikingStatus() {
-        databaseReference.child("likingUsers").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("likingUsers").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
@@ -313,6 +313,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
                         commentList.add(comment);
                     }
                     adapter.notifyDataSetChanged();
+                    Log.d("COMMENT LIST",String.valueOf(commentList.size()));
                 }
                 commentInputLayout.setVisibility(LinearLayout.VISIBLE);
             }

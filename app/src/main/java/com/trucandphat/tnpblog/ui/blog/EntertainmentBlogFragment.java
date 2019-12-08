@@ -58,6 +58,7 @@ public class EntertainmentBlogFragment extends Fragment {
         });
     }
     public void loadBlogs() {
+
         loadingDialog = new ProgressDialog(getActivity());
         loadingDialog.setTitle("Loading Confession Blog List");
         loadingDialog.setMessage("Please wait ...");
