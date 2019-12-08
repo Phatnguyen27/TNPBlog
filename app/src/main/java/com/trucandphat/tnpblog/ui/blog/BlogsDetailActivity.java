@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trucandphat.tnpblog.Adapter.BlogAdapter;
 import com.trucandphat.tnpblog.Adapter.CommentAdapter;
 import com.trucandphat.tnpblog.Model.Blog;
 import com.trucandphat.tnpblog.Model.Comment;
@@ -38,13 +39,15 @@ import com.trucandphat.tnpblog.R;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BlogsDetailActivity extends AppCompatActivity {
     private ImageView mImageBlog;
     private CircleImageView mAvatar;
-    private TextView mUserPost, mTv_itemDate, mTv_itemTitle, mTv_itemContent;
+    private TextView mUserPost, mTv_itemDate, mTv_itemTitle, mTv_itemContent, mTv_totalLike;
     private Button mBackDetail,mCommentButton;
     private ImageButton mLikeButton;
     private Blog blog;
@@ -57,6 +60,11 @@ public class BlogsDetailActivity extends AppCompatActivity {
     private CommentAdapter adapter;
     private ArrayList<Comment> commentList = new ArrayList<>();
     private LinearLayout commentInputLayout;
+
+    //tinh date;
+    private Calendar currentCal = Calendar.getInstance();
+    public final static String[] month = {"January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,11 +152,39 @@ public class BlogsDetailActivity extends AppCompatActivity {
 
     private void loadInformation() {
         mUserPost.setText(blog.getAuthorName());
-        mTv_itemDate.setText(blog.getDateCreated().toString());
+        mTv_itemDate.setText(getDateDifference(blog.getDateCreated()));
         mTv_itemTitle.setText(blog.getTitle());
         mTv_itemContent.setText(blog.getContent());
-    }
+        //lấy total like
+        checkTotalLike();
 
+    }
+    private String getDateDifference(Date date) {
+        String datediff = "";
+        Calendar itemCal = Calendar.getInstance();
+        itemCal.set(Calendar.HOUR_OF_DAY, 1);
+        itemCal.set(Calendar.MINUTE, 1);
+        itemCal.set(Calendar.SECOND, 1);
+        Date currentDate = itemCal.getTime();
+        itemCal.setTime(date);
+        itemCal.set(Calendar.HOUR_OF_DAY, 1);
+        itemCal.set(Calendar.MINUTE, 1);
+        itemCal.set(Calendar.SECOND, 1);
+        Date thatdate = itemCal.getTime();
+        long timediff = currentDate.getTime() - thatdate.getTime();
+        float daydiff = Math.round(((float) timediff / (1000 * 60 * 60 * 24)) * 10) / 10;
+        if (daydiff == 0.0) {
+            datediff += "Today";
+        } else if (daydiff > 0 && daydiff < 7) {
+            datediff += (int) Math.ceil(daydiff) + " days ago";
+        } else {
+            datediff += month[itemCal.get(Calendar.MONTH)] + " " + itemCal.get(Calendar.DATE);
+            if (!(currentCal.get(Calendar.YEAR) == itemCal.get(Calendar.YEAR))) {
+                datediff += " " + itemCal.get(Calendar.YEAR);
+            }
+        }
+        return datediff;
+    }
     private void dislikeBlog() {
         databaseReference.child("likingUsers").child(userId).setValue(null)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -156,6 +192,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
                             mLikeButton.setImageResource(R.drawable.ic_thumb_up_black_24dp);
+                            loadInformation(); //load lại
                         }
                     }
                 });
@@ -168,9 +205,29 @@ public class BlogsDetailActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
                             mLikeButton.setImageResource(R.drawable.ic_thumb_up_success_24dp);
+                            loadInformation();// load lại
                         }
                     }
                 });
+    }
+    private void checkTotalLike(){
+        databaseReference.child("likingUsers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    int count =0;
+                    for (DataSnapshot i :dataSnapshot.getChildren()){
+                        count++;
+                    }
+                    mTv_totalLike.setText(count+"");
+                } else mTv_totalLike.setText(0+"");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void checkLikingStatus() {
@@ -204,6 +261,7 @@ public class BlogsDetailActivity extends AppCompatActivity {
         mTv_itemTitle = findViewById(R.id.tv_itemTitle);
         mTv_itemContent = findViewById(R.id.tv_itemContent);
         mLikeButton = findViewById(R.id.like_blog_button);
+        mTv_totalLike = findViewById(R.id.total_like);
         //Dialog
         loadingDialog = new ProgressDialog(this);
         loadingDialog.setTitle("Loading blog's content");
